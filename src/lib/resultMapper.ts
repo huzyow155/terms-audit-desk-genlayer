@@ -46,7 +46,7 @@ export function parseReviewRecord(rawJson: string): RawReviewRecord {
       drifted: Boolean(data.drifted),
       previous_review_id: data.previous_review_id || '',
     };
-  } catch (err) {
+  } catch {
     throw new Error('Invalid review record format: failed to parse JSON');
   }
 }

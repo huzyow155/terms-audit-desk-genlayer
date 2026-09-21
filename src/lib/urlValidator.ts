@@ -55,7 +55,7 @@ export function validateDocumentUrl(rawUrl: string): UrlValidationResult {
     }
 
     return { valid: true };
-  } catch (err) {
+  } catch {
     return { valid: false, error: 'Malformed URL structure' };
   }
 }

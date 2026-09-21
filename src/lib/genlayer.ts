@@ -130,7 +130,7 @@ export async function fetchConsumerApproval(docUrl: string): Promise<ConsumerApp
       isApproved: Boolean(isApproved),
       approvalReviewId: approvalReviewId || '',
     };
-  } catch (err) {
+  } catch {
     // If consumer read fails gracefully return unapproved
     return {
       isApproved: false,

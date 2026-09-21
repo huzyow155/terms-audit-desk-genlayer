@@ -3,9 +3,8 @@ import {
   parseReviewRecord,
   formatCoverage,
   getOutcomeMetadata,
-  getItemStatusBadge,
   generateHonestyNotes,
-  RawReviewRecord,
+  type RawReviewRecord,
 } from '../src/lib/resultMapper';
 
 describe('resultMapper', () => {
