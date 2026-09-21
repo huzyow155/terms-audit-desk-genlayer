@@ -34,3 +34,5 @@ scripts/test-live-write.mjs
 .env*.local
 !.env.example
 
+
+.vercel
