@@ -114,6 +114,35 @@ export interface TxProgressUpdate {
   message: string;
 }
 
+export function verifyTransactionSuccess(receipt: any): void {
+  if (!receipt) {
+    throw new Error('No transaction receipt returned');
+  }
+
+  const isAccepted = receipt.status_name === 'ACCEPTED' || receipt.status === 5;
+  const isMajorityAgree =
+    receipt.result_name === 'MAJORITY_AGREE' ||
+    receipt.result_name === 'SUCCESS' ||
+    receipt.result === 6;
+
+  // Check leader execution result inside consensus_data
+  const leaderReceipt = receipt.consensus_data?.leader_receipt?.[0];
+  const leaderExecutionResult = leaderReceipt?.execution_result;
+  const isLeaderSuccess = !leaderExecutionResult || leaderExecutionResult === 'SUCCESS';
+
+  if (!isAccepted || !isMajorityAgree || !isLeaderSuccess) {
+    const errorPayload =
+      leaderReceipt?.result?.payload ||
+      leaderReceipt?.eq_outputs?.['0']?.payload ||
+      leaderReceipt?.genvm_result?.error_description ||
+      receipt.result_name ||
+      receipt.status_name ||
+      'Transaction failed execution';
+
+    throw new Error(`Transaction completed with non-success state: ${errorPayload}`);
+  }
+}
+
 export async function waitForReceiptWithProgress(
   hash: string,
   onProgress?: (update: TxProgressUpdate) => void
@@ -150,19 +179,7 @@ export async function waitForReceiptWithProgress(
     clearInterval(timer);
     const elapsed = Math.floor((Date.now() - startTime) / 1000);
 
-    const isAccepted = receipt.status_name === 'ACCEPTED' || receipt.status === 5;
-    const isSuccess =
-      receipt.result_name === 'MAJORITY_AGREE' ||
-      receipt.result_name === 'SUCCESS' ||
-      receipt.result === 6;
-
-    if (!isAccepted || !isSuccess) {
-      const errDetail =
-        receipt.result_name ||
-        receipt.status_name ||
-        'Transaction failed to achieve consensus';
-      throw new Error(`Transaction completed with non-success state: ${errDetail}`);
-    }
+    verifyTransactionSuccess(receipt);
 
     onProgress?.({
       stage: 'FINALIZED',
@@ -271,7 +288,7 @@ export async function submitConsumerApproval(
   const writeClient = getWriteClient(accountAddress);
   const hash = await writeClient.writeContract({
     address: DEPLOYMENT_CONFIG.consumerAddress,
-    functionName: 'approve_document',
+    functionName: 'approve_if_passed',
     args: [reviewId],
     value: 0n,
   });

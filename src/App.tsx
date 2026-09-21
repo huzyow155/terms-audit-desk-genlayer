@@ -555,7 +555,7 @@ export const App: React.FC = () => {
                 </p>
               ) : (
                 <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-                  Estimated consensus latency: <span className="font-semibold">about 20 to 110 seconds in our measurements</span> (3-4 chunks).
+                  Estimated consensus latency: typically <span className="font-semibold">20 to 110 seconds</span> (1 chunk about <span className="font-semibold">18 to 25 s</span> in our measurements).
                 </p>
               )}
             </div>

@@ -41,6 +41,7 @@ describe('Checklist Builder & Derivation tests', () => {
 
     expect(cid1).toHaveLength(16);
     expect(cid1).toMatch(/^[a-f0-9]{16}$/);
+    expect(cid1).toBe('eacf4d7b808ae544');
     expect(cid1).toBe(cid2);
   });
 });

@@ -2,37 +2,50 @@
 
 > **Prove an AI audit read the whole document, not just its first page.**
 >
-> Live decentralized document intelligence on **GenLayer studionet**.
+> Document compliance verification powered by GenLayer Intelligent Contracts on **studionet**.
 
 [![Deployment](https://img.shields.io/badge/Network-GenLayer%20studionet%20(61999)-0284c7)](https://explorer-studio.genlayer.com)
 [![Contract](https://img.shields.io/badge/FullRead%20Contract-0xfC2d...4d33-10b981)](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
 ## 1. Overview
 
-**Terms Audit Desk** is a production dApp built on the deployed **FullRead** Intelligent Contract on **GenLayer studionet**. It evaluates complex, multi-page public legal agreements (Terms of Service, SaaS contracts, Privacy Policies) against customizable compliance checklists, cryptographically proving validator consensus coverage across the **entire document**.
+**Terms Audit Desk** is a dApp built on the deployed **FullRead** Intelligent Contract on **GenLayer studionet**. It evaluates multi-page public legal agreements (Terms of Service, SaaS contracts, Privacy Policies) against customizable compliance checklists, providing validator consensus coverage across the **entire document**.
 
-- **Live Application URL**: [terms-audit-desk-genlayer.vercel.app](https://terms-audit-desk-genlayer.vercel.app) *(or your Vercel deployment URL)*
+- **Live Application URL**: [https://terms-audit-desk-genlayer.vercel.app](https://terms-audit-desk-genlayer.vercel.app)
 - **Underlying Intelligent Contract Repository**: [huzyow155/fullread-genlayer](https://github.com/huzyow155/fullread-genlayer)
+- **Interactive Demo Script**: [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)
 
 ---
 
 ## 2. Why GenLayer? The "Buried-Clause" Vulnerability
 
-Conventional AI-oracle integrations only pass a small prefix of a document (often under 4,000 characters) to an LLM due to context limits and single-shot execution. In legal agreements, this creates an enormous exploit surface: an adversary can make the first two pages appear completely benign and compliant, while burying predatory clauses (such as perpetual auto-renewal traps, unilateral modification rights, or waiver of liability) on page 3 or 4.
+Conventional AI-oracle integrations only pass a small prefix of a document (often under 4,000 characters) to an LLM due to context limits and single-shot execution. In legal agreements, this creates an exploit surface: an adverse party can make the first two pages appear completely compliant, while burying predatory clauses (such as perpetual auto-renewal traps, unilateral modification rights, or waiver of liability) on page 3 or 4.
 
-**FullRead on GenLayer solves this:**
-1. **Deterministic Partitioning**: Partitions the normalized text into fixed-size chunks (e.g. 5,000 characters each).
-2. **Multi-Round Decentralized Evaluation**: GenLayer validators read every chunk and verify clauses against deterministic criteria.
+**FullRead on GenLayer addresses this:**
+1. **Deterministic Partitioning**: Partitions the normalized text into fixed-size chunks (5,000 characters each).
+2. **Multi-Round Decentralized Evaluation**: GenLayer validators read each chunk and evaluate clauses against deterministic criteria.
 3. **Verbatim Grounded Quotes**: Validators must ground every positive finding in an exact substring quote from the document chunks.
 4. **On-Chain Proof of Coverage**: The contract records `coverage_bp` (basis points, where 10,000 bp = 100.00% complete coverage) alongside individual chunk SHA-256 hashes.
-5. **Decentralized Consensus**: Validators vote on outcomes, chunk hashes, and grounded quotes using GenLayer's non-deterministic consensus principles.
+5. **Validator Consensus**: Validators vote on outcomes, chunk hashes, and grounded quotes using GenLayer's non-deterministic consensus principles.
 
 ---
 
-## 3. Deployed Smart Contracts (GenLayer studionet)
+## 3. Screenshots
+
+### Compliant Document (100.00% Coverage &bull; PASS)
+![Audit Passed](docs/screenshots/audit-passed.png)
+
+### Buried Trap Clause Caught in Chunk 3 (100.00% Coverage &bull; FAIL)
+![Buried Trap Clause Caught](docs/screenshots/audit-failed-buried-clause.png)
+
+### Custom Evaluation Checklist Builder (Milestone 4)
+![Custom Checklist Builder](docs/screenshots/custom-checklist-builder.png)
+
+---
+
+## 4. Deployed Smart Contracts (GenLayer studionet)
 
 | Contract | Address | Explorer Link |
 | :--- | :--- | :--- |
@@ -47,45 +60,64 @@ Conventional AI-oracle integrations only pass a small prefix of a document (ofte
 
 ---
 
-## 4. Key Features
+## 5. What Validators Compare in Consensus
+
+Validators execute the review independently, comparing:
+1. **Document SHA-256**: Ensures all nodes fetched the exact identical source text.
+2. **Chunk SHA-256 Hashes**: Guarantees identical deterministic chunk boundaries across the agreement.
+3. **Coverage Basis Points (`coverage_bp`)**: Proves full or partial coverage (10,000 bp = 100.00%).
+4. **Overall Outcome & Failing Items**: Nodes agree strictly on the overall verdict (`PASS`, `FAIL`, or `REVIEW`) and the set of blocker violations.
+5. **Grounded Quote Verification**: Each validator confirms that the leader's extracted verbatim quotes exist in its own independently fetched document text.
+
+---
+
+## 6. Key Features
 
 - **Pre-Verified Samples (No Wallet Required)**: Instant inspection of 3 on-chain audits:
   - *Sample 1 (Compliant)*: 100.00% coverage, `PASS` outcome.
-  - *Sample 2 (Immediate Violation)*: Trap clause in chunk 1, `FAIL` outcome.
-  - *Sample 3 (Buried Trap Clause)*: Compliant in chunks 1 & 2, trap buried in chunk 3, `FAIL` outcome (demonstrating why whole-document coverage is required).
+  - *Sample 2 (Immediate Violation)*: Auto-renewal violation present in opening section, `FAIL` outcome.
+  - *Sample 3 (Buried Trap Clause)*: Fixture built with clause in final chunk, demonstrating that whole-document coverage catches traps that prefix-only tools miss.
 - **Custom Checklist Builder (Milestone 4)**:
   - Author checklists with up to 8 criteria.
   - Real-time client-side calculation of the deterministic 16-hex checklist ID (`deriveChecklistId`) matching the contract's canonical JSON SHA-256 algorithm.
   - On-chain registration via `register_checklist(name, items_json)`.
 - **MetaMask Web3 Write Path (Milestone 3)**:
-  - Seamless connection via `genlayer-js` using standard `window.ethereum` provider.
+  - Connection via `genlayer-js` using standard `window.ethereum` provider.
   - Automatic chain addition / switching to GenLayer studionet (`0xF22F`).
   - No burner wallets or private keys bundled in code.
 - **Staged Waiting Modal & Resumption**:
   - Live 5-stage progress indicator: Wallet Confirmation &rarr; Submitted to Studionet &rarr; Validators Reading &rarr; Consensus Agreement &rarr; Finalized.
   - Tracks elapsed seconds.
   - Transaction resilience: pending transactions are persisted in `localStorage` and automatically resume tracking upon page reload.
-- **Downstream Consumer Execution**:
-  - Cross-contract policy verification via `DocumentPolicyConsumer.is_document_approved` and `approve_document`.
+- **Downstream Consumer Policy Verification**:
+  - Cross-contract policy verification via `DocumentPolicyConsumer.is_document_approved(doc_url)` and execution via `approve_if_passed(review_id)`.
 - **Accessible & Ethical UI**:
   - Built with Tailwind CSS following WCAG AA standards.
   - High-contrast states, complete keyboard navigation, dark mode support, and screen-reader accessible ARIA roles.
 
 ---
 
-## 5. Realistic Latency Disclosure
+## 7. Measured Latency Disclosure
 
 GenLayer Intelligent Contracts perform live HTTP fetches from decentralized validator nodes, multi-chunk LLM prompt executions, and consensus voting across validators.
 
-In our empirical on-chain measurements on studionet:
-- **1-chunk review**: ~18 to 25 seconds.
-- **3-chunk full audit**: ~50 to 110 seconds.
+Transactions typically finalize within **20 to 110 seconds** (1 chunk about **18 to 25 s** in our measurements).
 
-The dApp prominently displays this latency disclosure in the UI so users understand decentralized consensus timing.
+The dApp displays this honest disclosure in the UI so users understand consensus timing.
 
 ---
 
-## 6. Local Setup and Testing
+## 8. Known Limitations
+
+1. **Document Size and Chunk Cap**: Documents exceeding 40,000 characters or 4 chunks cannot achieve `PASS`. If document size exceeds `max_chunks`, coverage basis points will be strictly less than 10,000, capping the maximum attainable outcome at `REVIEW`.
+2. **Static Content Only**: The contract uses `gl.nondet.web.get` which fetches raw HTTP responses. Client-side rendered Single Page Applications (SPAs requiring JavaScript execution) are not supported; public Markdown, plain text, or static HTML documents must be used.
+3. **Consensus Scope on Failure Verdicts**: When an audit results in `FAIL`, validators reach consensus on the `FAIL` verdict and the set of blocker violations. The reported statuses of non-failing items are not independently consensus-verified.
+4. **No Chunk Locations Stored On-Chain**: The contract records the overall outcome, coverage basis points, and grounded verbatim quotes, but does not store the specific chunk index or byte coordinates where each quote occurred.
+5. **Development Network (Studionet)**: Deployed on GenLayer studionet, which is an active development network subject to periodic developer resets.
+
+---
+
+## 9. Local Setup and Testing
 
 ### Prerequisites
 - Node.js `v20+` or `v24+`
@@ -108,7 +140,7 @@ cp .env.example .env
 ```bash
 npm test
 ```
-Runs 19 automated unit tests verifying URL validation, deterministic checklist ID calculation, result parsing, and wallet state persistence.
+Runs 22 automated unit tests verifying URL validation, deterministic checklist ID calculation, receipt success verification (including 404 failure handling), result parsing, and wallet state persistence.
 
 ### Running End-to-End Tests (Playwright)
 ```bash
@@ -128,7 +160,7 @@ npm run build
 
 ---
 
-## 7. Security & Secret Hygiene
+## 10. Security & Secret Hygiene
 
 This repository contains **zero private keys**, mnemonics, or sensitive credentials. User write operations are signed exclusively via the user's own MetaMask wallet extension.
 
@@ -136,9 +168,3 @@ Run the built-in secret scanner to verify:
 ```bash
 python scripts/secret-scan.py
 ```
-
----
-
-## 8. License
-
-MIT License &copy; 2026 Terms Audit Desk Contributors.

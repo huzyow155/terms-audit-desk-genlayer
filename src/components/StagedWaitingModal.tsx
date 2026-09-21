@@ -201,7 +201,7 @@ export const StagedWaitingModal: React.FC<StagedWaitingModalProps> = ({
           <div className="rounded-lg bg-amber-50 p-3 text-[11px] text-amber-900 border border-amber-200 dark:bg-amber-950/40 dark:border-amber-900 dark:text-amber-300">
             <span className="font-semibold">Honest Latency Note: </span>
             GenLayer Intelligent Contracts perform real web fetches, multi-chunk deterministic evaluations, and consensus voting.
-            Transactions typically finalize within <span className="font-bold">20 to 110 seconds</span>. Please keep this tab open. If you refresh, the pending transaction will automatically resume tracking.
+            Transactions typically finalize within <span className="font-bold">20 to 110 seconds</span> (1 chunk about <span className="font-bold">18 to 25 s</span> in our measurements). Please keep this tab open. If you refresh, the pending transaction will automatically resume tracking.
           </div>
         </div>
 

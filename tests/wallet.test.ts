@@ -4,6 +4,7 @@ import {
   savePendingTransaction,
   clearPendingTransaction,
   isMetaMaskAvailable,
+  verifyTransactionSuccess,
   type PendingTransaction,
 } from '../src/lib/wallet';
 
@@ -55,5 +56,59 @@ describe('wallet lib tests', () => {
 
   it('detects if window.ethereum is available in environment', () => {
     expect(typeof isMetaMaskAvailable()).toBe('boolean');
+  });
+
+  describe('verifyTransactionSuccess', () => {
+    it('passes for a valid accepted receipt with leader SUCCESS', () => {
+      const validReceipt = {
+        status: 5,
+        status_name: 'ACCEPTED',
+        result: 6,
+        result_name: 'MAJORITY_AGREE',
+        consensus_data: {
+          leader_receipt: [
+            {
+              execution_result: 'SUCCESS',
+            },
+          ],
+        },
+      };
+
+      expect(() => verifyTransactionSuccess(validReceipt)).not.toThrow();
+    });
+
+    it('throws with clear error for a failing write (e.g. 404 document URL)', () => {
+      const failing404Receipt = {
+        status_name: 'UNDETERMINED',
+        result_name: 'MAJORITY_DISAGREE',
+        consensus_data: {
+          leader_receipt: [
+            {
+              execution_result: 'ERROR',
+              result: {
+                status: 'rollback',
+                payload: 'fetch failed with status 404',
+              },
+            },
+          ],
+        },
+      };
+
+      expect(() => verifyTransactionSuccess(failing404Receipt)).toThrowError(
+        /fetch failed with status 404/
+      );
+    });
+
+    it('throws for rejected status or empty receipt', () => {
+      expect(() => verifyTransactionSuccess(null)).toThrowError(
+        /No transaction receipt returned/
+      );
+
+      const rejectedReceipt = {
+        status_name: 'REJECTED',
+        result_name: 'MAJORITY_DISAGREE',
+      };
+      expect(() => verifyTransactionSuccess(rejectedReceipt)).toThrow();
+    });
   });
 });

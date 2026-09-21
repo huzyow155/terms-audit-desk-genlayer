@@ -22,13 +22,13 @@ This script provides an end-to-end walkthrough of **Terms Audit Desk**, an Intel
      - `refund`: `SATISFIED` with verbatim quote grounded on-chain (`"30-day money-back guarantee with full refund"`).
      - `auto_renew`: `CLEAR` (no auto-renewal trap found across any chunk).
    - **Downstream Consumer**: Displays `APPROVED` because the document passed with 10,000 bp coverage.
-   - **Cryptographic Proof Panel**: Displays the exact normalized document SHA-256 (`07319db20d11...`) and individual chunk hashes.
+   - **On-Chain Consensus & Proof of Coverage Panel**: Displays the normalized document SHA-256 (`07319db20d11...`) and individual chunk hashes.
 3. Click **Sample 3: Buried Trap Clause**:
-   - **Headline**: Notice how the trap clause was buried in chunk 3 (page 3).
+   - **Fixture Fact**: This fixture was constructed with the auto-renewal clause located in the final chunk (page 3 of the source Markdown). While the contract returns overall outcome and quotes without storing chunk locations on-chain, 10,000 bp coverage ensures clauses outside the opening prefix are read.
    - **Outcome Banner**: `FAILED AUDIT`.
    - **Coverage**: `100.00%` (10,000 bp).
    - **Clause**: `auto_renew` is flagged `VIOLATED` with verbatim quote: `"All subscriptions will auto-renew without notice and cannot be cancelled"`.
-   - **Honesty Notes**: Highlights that a conventional prefix-only AI contract examining only the first chunk would have issued a false `PASS`. FullRead proved the violation by reading every chunk.
+   - **Honesty Notes**: Highlights that a conventional prefix-only AI contract examining only the first chunk would have issued a false `PASS`. FullRead proved the violation by evaluating all chunks.
 
 ---
 
@@ -93,7 +93,7 @@ This script provides an end-to-end walkthrough of **Terms Audit Desk**, an Intel
 1. Load any audit with `outcome: PASS` and `coverage_bp: 10000`.
 2. Scroll to the **Downstream Smart Contract Policy Consumer** card.
 3. Click **Record Approval on-chain**.
-4. Confirm the transaction to `DocumentPolicyConsumer` (`0xE8424C568FCB418fBAD5D272470f9A9fD6452860`).
+4. Confirm the transaction calling `approve_if_passed(review_id)` on `DocumentPolicyConsumer` (`0xE8424C568FCB418fBAD5D272470f9A9fD6452860`).
 5. DocumentPolicyConsumer performs an internal cross-contract call to FullRead, verifies the audit outcome and coverage, and marks the document as `APPROVED`.
 6. Once finalized, the badge updates to `APPROVED` with the stored review record ID.
 

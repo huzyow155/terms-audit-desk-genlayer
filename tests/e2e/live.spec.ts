@@ -21,7 +21,7 @@ test.describe('Terms Audit Desk - Live Production Verification', () => {
     await expect(page.getByText('100.00%', { exact: true })).toBeVisible();
 
     // Verify proof panel
-    await expect(page.locator('text=On-Chain Cryptographic Proof Panel')).toBeVisible();
+    await expect(page.locator('text=On-Chain Consensus & Proof of Coverage Panel')).toBeVisible();
 
     // Test clicking Sample 3: Buried Trap Clause on production
     const sample3 = page.locator('text=Buried Trap Clause').first();
