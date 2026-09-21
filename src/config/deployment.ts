@@ -82,6 +82,6 @@ export const SAMPLE_REVIEWS: SampleReviewConfig[] = [
     docUrl: 'https://raw.githubusercontent.com/huzyow155/fullread-genlayer/1089f03d16472bf324510b52b3f73715d310ad7f/tests/fixtures/violation_in_last_chunk.md',
     expectedOutcome: 'FAIL',
     expectedCoverageBp: 10000,
-    explanation: 'Fixture fact: This document is constructed with its auto-renewal clause placed in the final chunk (page 3 of the source Markdown). While the contract returns overall outcome and grounded quotes without recording chunk coordinates on-chain, 10,000 bp coverage ensures that clauses outside the opening prefix are read and evaluated.',
+    explanation: 'Fixture fact: This document is constructed with its auto-renewal clause placed in the final chunk. While the contract returns overall outcome and grounded quotes without recording chunk coordinates on-chain, 10,000 bp coverage ensures that clauses outside the opening prefix are read and evaluated.',
   },
 ];

@@ -6,6 +6,7 @@
 
 [![Deployment](https://img.shields.io/badge/Network-GenLayer%20studionet%20(61999)-0284c7)](https://explorer-studio.genlayer.com)
 [![Contract](https://img.shields.io/badge/FullRead%20Contract-0xfC2d...4d33-10b981)](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
@@ -86,7 +87,8 @@ Validators execute the review independently, comparing:
   - Automatic chain addition / switching to GenLayer studionet (`0xF22F`).
   - No burner wallets or private keys bundled in code.
 - **Staged Waiting Modal & Resumption**:
-  - Live 5-stage progress indicator: Wallet Confirmation &rarr; Submitted to Studionet &rarr; Validators Reading &rarr; Consensus Agreement &rarr; Finalized.
+  - Live 5-stage progress indicator: Wallet Confirmation &rarr; Submitted to Studionet &rarr; Validators Reading &rarr; Consensus Agreement &rarr; Accepted by Validators.
+  - Accepted results can still be appealed until finalization.
   - Tracks elapsed seconds.
   - Transaction resilience: pending transactions are persisted in `localStorage` and automatically resume tracking upon page reload.
 - **Downstream Consumer Policy Verification**:
@@ -101,7 +103,7 @@ Validators execute the review independently, comparing:
 
 GenLayer Intelligent Contracts perform live HTTP fetches from decentralized validator nodes, multi-chunk LLM prompt executions, and consensus voting across validators.
 
-Transactions typically finalize within **20 to 110 seconds** (1 chunk about **18 to 25 s** in our measurements).
+Transactions typically reach acceptance by validators within **20 to 110 seconds** (1 chunk about **18 to 25 s** in our measurements). Accepted results can still be appealed until finalization.
 
 The dApp displays this honest disclosure in the UI so users understand consensus timing.
 
@@ -158,6 +160,12 @@ npm run dev
 npm run build
 ```
 
+### Design System Skill Setup (Optional)
+The UX design workflow utilizes the `ui-ux-pro-max-cli` skill. To install or refresh it locally:
+```bash
+npx -y ui-ux-pro-max-cli init --ai antigravity
+```
+
 ---
 
 ## 10. Security & Secret Hygiene
@@ -168,3 +176,10 @@ Run the built-in secret scanner to verify:
 ```bash
 python scripts/secret-scan.py
 ```
+
+---
+
+## 11. License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

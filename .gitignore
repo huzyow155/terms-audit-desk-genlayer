@@ -36,3 +36,4 @@ scripts/test-live-write.mjs
 
 
 .vercel
+.agents/

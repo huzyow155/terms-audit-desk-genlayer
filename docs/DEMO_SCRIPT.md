@@ -24,7 +24,7 @@ This script provides an end-to-end walkthrough of **Terms Audit Desk**, an Intel
    - **Downstream Consumer**: Displays `APPROVED` because the document passed with 10,000 bp coverage.
    - **On-Chain Consensus & Proof of Coverage Panel**: Displays the normalized document SHA-256 (`07319db20d11...`) and individual chunk hashes.
 3. Click **Sample 3: Buried Trap Clause**:
-   - **Fixture Fact**: This fixture was constructed with the auto-renewal clause located in the final chunk (page 3 of the source Markdown). While the contract returns overall outcome and quotes without storing chunk locations on-chain, 10,000 bp coverage ensures clauses outside the opening prefix are read.
+   - **Fixture Fact**: This fixture was constructed with the auto-renewal clause located in the final chunk. While the contract returns overall outcome and quotes without storing chunk locations on-chain, 10,000 bp coverage ensures clauses outside the opening prefix are read.
    - **Outcome Banner**: `FAILED AUDIT`.
    - **Coverage**: `100.00%` (10,000 bp).
    - **Clause**: `auto_renew` is flagged `VIOLATED` with verbatim quote: `"All subscriptions will auto-renew without notice and cannot be cancelled"`.

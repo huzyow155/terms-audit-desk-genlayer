@@ -27,7 +27,7 @@ const STAGES = [
   { id: 'SUBMITTED', label: 'Submitted to Studionet', icon: Clock, desc: 'Broadcasted to GenLayer mempool' },
   { id: 'VALIDATING', label: 'Validators Reading', icon: FileSearch, desc: 'Validators fetch URL & evaluate clauses' },
   { id: 'CONSENSUS', label: 'Consensus Agreement', icon: Users, desc: 'Validators compare outputs & reach agreement' },
-  { id: 'FINALIZED', label: 'Result Finalized', icon: ShieldCheck, desc: 'Audit immutably stored on-chain' },
+  { id: 'FINALIZED', label: 'Accepted by Validators', icon: ShieldCheck, desc: 'Audit accepted by validators on-chain. Accepted results can still be appealed until finalization.' },
 ];
 
 function getStageIndex(stageId?: string): number {
@@ -201,7 +201,7 @@ export const StagedWaitingModal: React.FC<StagedWaitingModalProps> = ({
           <div className="rounded-lg bg-amber-50 p-3 text-[11px] text-amber-900 border border-amber-200 dark:bg-amber-950/40 dark:border-amber-900 dark:text-amber-300">
             <span className="font-semibold">Honest Latency Note: </span>
             GenLayer Intelligent Contracts perform real web fetches, multi-chunk deterministic evaluations, and consensus voting.
-            Transactions typically finalize within <span className="font-bold">20 to 110 seconds</span> (1 chunk about <span className="font-bold">18 to 25 s</span> in our measurements). Please keep this tab open. If you refresh, the pending transaction will automatically resume tracking.
+            Transactions typically reach acceptance by validators within <span className="font-bold">20 to 110 seconds</span> (1 chunk about <span className="font-bold">18 to 25 s</span> in our measurements). Accepted results can still be appealed until finalization. Please keep this tab open. If you refresh, the pending transaction will automatically resume tracking.
           </div>
         </div>
 

@@ -29,7 +29,7 @@ export const SampleReviews: React.FC<SampleReviewsProps> = ({
           Verify On-Chain Audit Records (No Wallet Required)
         </h3>
         <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-          Explore three real audit records finalized by GenLayer studionet validator consensus. Click any sample to inspect the on-chain verdict, verbatim quotes, and coverage proof.
+          Explore three real audit records accepted by GenLayer studionet validator consensus. Click any sample to inspect the on-chain verdict, verbatim quotes, and coverage proof. Accepted results can still be appealed until finalization.
         </p>
       </div>
 

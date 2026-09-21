@@ -185,7 +185,7 @@ export async function waitForReceiptWithProgress(
       stage: 'FINALIZED',
       hash,
       elapsedSeconds: elapsed,
-      message: 'Consensus verified! Transaction accepted on GenLayer studionet.',
+      message: 'Consensus verified! Transaction accepted by validators on GenLayer studionet. Accepted results can still be appealed until finalization.',
     });
 
     return receipt;
