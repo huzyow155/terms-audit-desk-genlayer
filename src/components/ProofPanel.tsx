@@ -22,7 +22,7 @@ export const ProofPanel: React.FC<ProofPanelProps> = ({ record }) => {
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-4 w-4 text-sky-600 dark:text-sky-400" />
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-            On-Chain Consensus & Proof of Coverage Panel
+            On-Chain Consensus & Coverage Panel
           </h3>
         </div>
         <a

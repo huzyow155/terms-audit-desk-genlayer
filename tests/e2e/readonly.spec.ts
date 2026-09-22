@@ -20,8 +20,8 @@ test.describe('Terms Audit Desk - Read-Only Flow', () => {
     await expect(page.locator('text=PASSED AUDIT')).toBeVisible({ timeout: 15000 });
     await expect(page.getByText('100.00%', { exact: true })).toBeVisible();
 
-    // Verify proof panel
-    await expect(page.locator('text=On-Chain Consensus & Proof of Coverage Panel')).toBeVisible();
+    // Verify coverage panel
+    await expect(page.locator('text=On-Chain Consensus & Coverage Panel')).toBeVisible();
     await expect(page.locator('text=07319db20d11e985b14175a711e9a0f88bf1e7758f24aaabf21ff807c5f497a8')).toBeVisible();
 
     // Click Sample 3: Buried Trap Clause

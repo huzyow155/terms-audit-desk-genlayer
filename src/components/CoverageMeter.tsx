@@ -21,7 +21,7 @@ export const CoverageMeter: React.FC<CoverageMeterProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 dark:border-slate-800">
         <div>
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Proof of Whole-Document Coverage
+            Verified Whole-Document Coverage
           </span>
           <div className="flex items-center gap-2 mt-0.5">
             <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">

@@ -12,17 +12,17 @@ This script provides an end-to-end walkthrough of **Terms Audit Desk**, an Intel
 
 ---
 
-## 2. Walkthrough 1: Read-Only Audit & Proof of Coverage (Zero Gas / No Wallet)
+## 2. Walkthrough 1: Read-Only Audit & Verified Quote Coverage (Zero Gas / No Wallet)
 
 1. Open the dApp in your browser.
 2. Observe that **Sample 1: Compliant Document** is loaded automatically on initial mount:
    - **Outcome Banner**: `PASSED AUDIT` (Revision #1).
-   - **Proof of Coverage**: `100.00%` (3/3 chunks analyzed deterministically, `10,000 bp`).
+   - **Coverage Verification**: `100.00%` (3/3 chunks analyzed deterministically, `10,000 bp`).
    - **Checklist**:
      - `refund`: `SATISFIED` with verbatim quote grounded on-chain (`"30-day money-back guarantee with full refund"`).
      - `auto_renew`: `CLEAR` (no auto-renewal trap found across any chunk).
    - **Downstream Consumer**: Displays `APPROVED` because the document passed with 10,000 bp coverage.
-   - **On-Chain Consensus & Proof of Coverage Panel**: Displays the normalized document SHA-256 (`07319db20d11...`) and individual chunk hashes.
+   - **On-Chain Consensus & Coverage Panel**: Displays the normalized document SHA-256 (`07319db20d11...`) and individual chunk hashes.
 3. Click **Sample 3: Buried Trap Clause**:
    - **Fixture Fact**: This fixture was constructed with the auto-renewal clause located in the final chunk. While the contract returns overall outcome and quotes without storing chunk locations on-chain, 10,000 bp coverage ensures clauses outside the opening prefix are read.
    - **Outcome Banner**: `FAILED AUDIT`.

@@ -30,19 +30,19 @@
 
 | Contract | Purpose | Deployed Address | Explorer Link | Reference Source | Canonical Repository |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **FullRead Intelligent Contract** | Autonomous Intelligent Contract that fetches multi-page documents via `gl.nondet.web.get`, partitions text into 5,000-char chunks, prompts validator LLMs to evaluate checklist criteria with verbatim quote grounding, and records cryptographic whole-document proof of coverage on-chain. | [`0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33`](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33) | [View on Explorer](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33) | [`contracts-reference/FullRead.py`](contracts-reference/FullRead.py) | [contracts/full_read.py](https://github.com/huzyow155/fullread-genlayer/blob/main/contracts/full_read.py) |
+| **FullRead Intelligent Contract** | Autonomous Intelligent Contract that fetches multi-page documents via `gl.nondet.web.get`, partitions text into 5,000-char chunks, prompts validator LLMs to evaluate checklist criteria with verbatim quote grounding, and records verified quote coverage and chunk hashes on-chain. | [`0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33`](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33) | [View on Explorer](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33) | [`contracts-reference/FullRead.py`](contracts-reference/FullRead.py) | [contracts/full_read.py](https://github.com/huzyow155/fullread-genlayer/blob/main/contracts/full_read.py) |
 | **DocumentPolicyConsumer** | Downstream consumer contract performing cross-contract view queries to FullRead and enforcing an on-chain policy gate, approving documents only if they achieve a strict `PASS` verdict with 100.00% (`10000 bp`) coverage. | [`0xE8424C568FCB418fBAD5D272470f9A9fD6452860`](https://explorer-studio.genlayer.com/address/0xE8424C568FCB418fBAD5D272470f9A9fD6452860) | [View on Explorer](https://explorer-studio.genlayer.com/address/0xE8424C568FCB418fBAD5D272470f9A9fD6452860) | [`contracts-reference/DocumentPolicyConsumer.py`](contracts-reference/DocumentPolicyConsumer.py) | [examples/consumer/consumer.py](https://github.com/huzyow155/fullread-genlayer/blob/main/examples/consumer/consumer.py) |
 
 ### Contract Specifications
 
 #### 1. FullRead Intelligent Contract (`FullRead.py`)
 - **Contract Name**: `FullRead`
-- **Purpose**: Autonomous GenLayer Intelligent Contract that fetches public multi-page legal documents, deterministically partitions them into fixed-size chunks, prompts decentralized validator LLMs to evaluate compliance checklist criteria with verbatim quote grounding, and cryptographically records whole-document proof of coverage on-chain.
+- **Purpose**: Autonomous GenLayer Intelligent Contract that fetches public multi-page legal documents, deterministically partitions them into fixed-size chunks, prompts decentralized validator LLMs to evaluate compliance checklist criteria with verbatim quote grounding, and records hash-verified whole-document coverage and grounded quotes on-chain.
 - **Deployed Address**: `0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33`
 - **Explorer Link**: [https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33](https://explorer-studio.genlayer.com/address/0xfC2d4d29b46f44A6f4d09496451ff662dA8b4d33)
 - **Local Reference Source**: [`contracts-reference/FullRead.py`](contracts-reference/FullRead.py)
 - **Full Contract Repository**: [https://github.com/huzyow155/fullread-genlayer](https://github.com/huzyow155/fullread-genlayer)
-- **Deployed Code SHA-256**: `4c1d8f329fd74d9eb128993553a3c0df3f37eede5f1b9e43bf73c86b2903576c`
+- **Deployed Python Source SHA-256 (from deployment tx via `eth_getTransactionByHash`)**: `4c1d8f329fd74d9eb128993553a3c0df3f37eede5f1b9e43bf73c86b2903576c`
 
 #### 2. DocumentPolicyConsumer Contract (`DocumentPolicyConsumer.py`)
 - **Contract Name**: `DocumentPolicyConsumer`
@@ -51,7 +51,7 @@
 - **Explorer Link**: [https://explorer-studio.genlayer.com/address/0xE8424C568FCB418fBAD5D272470f9A9fD6452860](https://explorer-studio.genlayer.com/address/0xE8424C568FCB418fBAD5D272470f9A9fD6452860)
 - **Local Reference Source**: [`contracts-reference/DocumentPolicyConsumer.py`](contracts-reference/DocumentPolicyConsumer.py)
 - **Full Contract Repository**: [https://github.com/huzyow155/fullread-genlayer](https://github.com/huzyow155/fullread-genlayer)
-- **Deployed Code SHA-256**: `2e4d268513f38ea2444ef3dd833554b08de54004d6cbb6a36a2c413a2d1ae129`
+- **Deployed Python Source SHA-256 (from deployment tx via `eth_getTransactionByHash`)**: `2e4d268513f38ea2444ef3dd833554b08de54004d6cbb6a36a2c413a2d1ae129`
 
 - **Network Name**: `GenLayer studionet`
 - **Chain ID**: `61999` (`0xF22F`)
@@ -68,7 +68,7 @@ Conventional AI-oracle integrations only pass a small prefix of a document (ofte
 1. **Deterministic Partitioning**: Partitions the normalized text into fixed-size chunks (5,000 characters each).
 2. **Multi-Round Decentralized Evaluation**: GenLayer validators read each chunk and evaluate clauses against deterministic criteria.
 3. **Verbatim Grounded Quotes**: Validators must ground every positive finding in an exact substring quote from the document chunks.
-4. **On-Chain Proof of Coverage**: The contract records `coverage_bp` (basis points, where 10,000 bp = 100.00% complete coverage) alongside individual chunk SHA-256 hashes.
+4. **On-Chain Coverage Tracking**: The contract records `coverage_bp` (basis points, where 10,000 bp = 100.00% complete coverage) alongside individual chunk SHA-256 hashes.
 5. **Validator Consensus**: Validators vote on outcomes, chunk hashes, and grounded quotes using GenLayer's non-deterministic consensus principles.
 
 ---

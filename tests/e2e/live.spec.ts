@@ -20,8 +20,8 @@ test.describe('Terms Audit Desk - Live Production Verification', () => {
     await expect(page.locator('text=PASSED AUDIT')).toBeVisible({ timeout: 20000 });
     await expect(page.getByText('100.00%', { exact: true })).toBeVisible();
 
-    // Verify proof panel
-    await expect(page.locator('text=On-Chain Consensus & Proof of Coverage Panel')).toBeVisible();
+    // Verify coverage panel
+    await expect(page.locator('text=On-Chain Consensus & Coverage Panel')).toBeVisible();
 
     // Test clicking Sample 3: Buried Trap Clause on production
     const sample3 = page.locator('text=Buried Trap Clause').first();

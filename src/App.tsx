@@ -443,7 +443,7 @@ export const App: React.FC = () => {
               Prove an AI audit read the whole document, not just its first page.
             </h1>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-              Decentralized validator consensus deterministically partitions your legal agreement, verifies quotes with code, and registers immutable proof of coverage on GenLayer studionet.
+              Decentralized validator consensus deterministically partitions your legal agreement, verifies quotes with code, and registers hash-verified coverage on GenLayer studionet.
             </p>
           </div>
 
@@ -618,7 +618,7 @@ export const App: React.FC = () => {
               hasWallet={Boolean(walletAddress)}
             />
 
-            {/* Cryptographic Proof Panel */}
+            {/* On-Chain Verification & Coverage Panel */}
             <ProofPanel record={activeRecord} />
 
             {/* Revision History */}
